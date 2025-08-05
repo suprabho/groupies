@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/ovo-app/static/css/main.101331f2.css",
+    "main.js": "/ovo-app/static/js/main.0a717ea7.js",
+    "index.html": "/ovo-app/index.html",
+    "main.101331f2.css.map": "/ovo-app/static/css/main.101331f2.css.map",
+    "main.0a717ea7.js.map": "/ovo-app/static/js/main.0a717ea7.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.101331f2.css",
+    "static/js/main.0a717ea7.js"
+  ]
+}

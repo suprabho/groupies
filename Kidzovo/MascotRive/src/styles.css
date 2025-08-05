@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap');
+
+body {
+    background-color: #3CC;
+    font-family: 'Manrope', sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .App {
+    font-family: sans-serif;
+    text-align: center;
+    font-size: 24px;
+    color: #efcb7d;
+  }
+  
+  h1 {
+    margin-bottom: 0;
+  }
+  
+  .container {
+    height: 40vh;
+    width: 100%;
+  }
+  
+  .app-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    min-height: 100vh;
+    box-sizing: border-box;
+  }
+  
+  .rive-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 40px;
+  }
+  
+  .rive-wrapper {
+    width: min(500px, 90vw);
+    height: min(500px, 90vw);
+    border: 20px solid #ffffff;
+    border-radius: 50%;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+  
+  .controls {
+    width: 400px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+    padding: 20px;
+    background: #248F8F;
+    border-radius: 12px;
+    height: fit-content;
+  }
+  
+  .controls button {
+    padding: 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: #FFC900;
+    color: #FF3366;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+    font-size: 16px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    font-family: 'Manrope', sans-serif;
+    position: relative;
+  }
+  
+  .controls button:hover {
+    background-color: #FF3366;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+  
+  .controls button.active {
+    background-color: #FF3366;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+  
+  .controls button.active::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 8px;
+    background-color: #FF3366;
+    border-radius: 50%;
+  }
+  
+  .theme-button {
+    color: white !important;
+    background-color: #66C !important;
+    grid-column: 1 / -1;
+    height: 150px !important;
+    margin-bottom: 10px;
+    font-size: 24px !important;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+  }
+  
+  .theme-button:hover {
+    background-color: #66C !important;
+  }
+  
+  /* Make sure theme button doesn't get the active styles */
+  .theme-button.active {
+    background-color: #66C !important;
+  }
+  
+  .theme-button.active::after {
+    display: none;
+  }
+  
+  @media screen and (max-width: 1024px) {
+    .app-container {
+      padding: 20px;
+    }
+
+    .rive-container {
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .controls {
+      width: min(400px, 90vw);
+    }
+
+    .controls button {
+      height: 80px;
+      font-size: 14px;
+    }
+
+    .theme-button {
+      height: 120px !important;
+      font-size: 20px !important;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .controls {
+      grid-template-columns: repeat(2, 1fr);
+      padding: 15px;
+    }
+
+    .rive-wrapper {
+      border-width: 10px;
+    }
+  }
+  
