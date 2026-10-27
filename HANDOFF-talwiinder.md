@@ -25,6 +25,7 @@ npm run dev        # http://localhost:3000/artist/talwiinder
 | `components/artist/*` | One file per section: Hero, Marquee, SectionNav, Album, Essentials, Diary, FanZone, Live, Merch, Membership, ArtistFooter, CartDrawer, Checkout, Toast |
 | `app/globals.css` | Bottom "Artist worlds" block: font utility classes, grain, brush-stroke reveal, marquee, reduced-motion rules |
 | `public/talwiinder/*.webp` | 16 AI-rendered images (ElevenLabs, seedream-5-pro). No people in any of them |
+| `app/artist/[slug]/opengraph-image.tsx` | 1200×630 share card, prerendered per artist. Fonts are TTFs in `assets/fonts/`; art comes from `images.share` (JPEG, because the renderer can't read WebP) |
 
 Homepage links (`components/homepage/Hero.tsx`, `components/layout/Navbar.tsx`) point to `/artist/talwiinder`.
 

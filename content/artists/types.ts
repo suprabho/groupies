@@ -94,6 +94,8 @@ export type Artist = {
     cover: string;
     dressingRoom: string;
     crowd: string;
+    /** JPEG/PNG copies for the social share card. Its renderer can't read WebP. */
+    share: { art: string; cover: string };
   };
   theme: ArtistTheme;
   tagline: string;
