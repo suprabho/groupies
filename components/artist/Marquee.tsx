@@ -2,6 +2,10 @@
 
 import { Fragment } from "react";
 import { useWorld } from "./state";
+import { Cross } from "./Goth";
+
+// The separators are neon crosses, cycling through the three accents.
+const CROSSES = ["text-(--a-accent)", "text-(--a-accent2)", "text-(--a-accent3)"];
 
 /** The album's tracklist as one slow, giant typographic strip. Decorative. */
 export default function Marquee() {
@@ -11,12 +15,14 @@ export default function Marquee() {
     <div className="flex items-center">
       {titles.map((t, i) => (
         <Fragment key={t}>
-          <span className={`whitespace-nowrap px-[2vw] font-stencil text-[clamp(4rem,11vw,10rem)] font-black uppercase leading-none ${i % 2 ? "text-outline-ink" : ""}`}>
+          <span
+            className={`whitespace-nowrap px-[2.5vw] font-display text-[clamp(3rem,8vw,7.5rem)] uppercase leading-none tracking-[-0.03em] ${
+              i % 2 ? "font-extralight" : "font-black"
+            }`}
+          >
             {t}
           </span>
-          <span lang="pa" className="font-pa text-[clamp(1.5rem,3vw,2.75rem)] font-bold text-(--a-accent)">
-            {artist.album.titleLocal}
-          </span>
+          <Cross size={40} className={`h-7 w-7 shrink-0 drop-shadow-[0_0_10px_currentColor] md:h-10 md:w-10 ${CROSSES[i % 3]}`} />
         </Fragment>
       ))}
     </div>

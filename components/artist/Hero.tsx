@@ -1,10 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import { Pause, Play, Check, Plus } from "@phosphor-icons/react";
 import PaintedName from "./PaintedName";
+import Socials from "./Socials";
 import Cover from "./Cover";
-import { btn } from "./ui";
+import { Duotone, btn } from "./ui";
+import { Corners, RoseWindow } from "./Goth";
 import { usePlayer, useWorld } from "./state";
 
 export default function Hero() {
@@ -17,27 +18,40 @@ export default function Hero() {
   const heroImage = artist.images.portrait ?? artist.images.faceArt;
 
   return (
-    <section id="top" className="relative overflow-hidden">
-      {/* The name in Gurmukhi, as a ghosted graphic behind everything */}
-      {artist.nameLocal ? (
-        <span
-          aria-hidden
-          lang="pa"
-          className="pointer-events-none absolute -left-[3vw] top-[2%] select-none whitespace-nowrap font-pa text-[30vw] font-extrabold leading-none text-(--a-accent) opacity-[0.07]"
-        >
-          {artist.nameLocal}
-        </span>
-      ) : null}
+    <section id="top" className="relative">
+      {/* Full-bleed black and white, like a gig photo */}
+      <div className="relative flex min-h-[min(92svh,900px)] flex-col justify-end overflow-hidden">
+        <Duotone
+          src={heroImage}
+          alt={artist.images.portrait ? artist.name : "A skull face-paint study in white paint on black paper"}
+          sizes="100vw"
+          priority
+          className="absolute! inset-0"
+          imgClassName={artist.images.portrait ? "object-[50%_22%] brightness-90" : "object-[50%_38%] brightness-90"}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-(--a-bg) via-(--a-bg)/55 to-(--a-bg)/10" aria-hidden />
+        <div className="absolute inset-0 bg-gradient-to-r from-(--a-bg)/70 via-transparent to-transparent" aria-hidden />
+        {/* A rose window ghosted over the paint, like light through a cathedral */}
+        <RoseWindow className="absolute -right-[12vw] top-[6%] w-[62vw] max-w-[860px] text-(--a-ink)/[0.13] mix-blend-screen" />
 
-      <div className="relative mx-auto max-w-[1400px] px-5 pb-14 pt-10 md:px-10 md:pb-20 md:pt-14">
-        <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
-          <div className="relative z-10 lg:col-span-7 lg:pb-[10vw]">
-            <p className="font-hand text-[clamp(1.5rem,2.4vw,2rem)] text-(--a-accent) [transform:rotate(-2deg)]">the paint stays on.</p>
-            <p className="mt-3 max-w-[14ch] font-serif text-[clamp(3.25rem,7vw,7rem)] italic leading-[0.92]">{artist.tagline}</p>
-            <p className="mt-6 max-w-[48ch] text-[17px] leading-relaxed text-(--a-muted)">
-              From {artist.origin}, living in the {artist.base}. {artist.sound}
-            </p>
-            <div className="mt-8 flex flex-wrap items-center gap-3">
+        <div className="relative mx-auto w-full max-w-[1400px] px-5 pb-10 pt-40 md:px-10 md:pb-14">
+          <p className="font-hand text-[clamp(1.1rem,1.6vw,1.4rem)] leading-none text-(--a-accent)">The paint stays on.</p>
+          <p className="mt-4 max-w-[13ch] font-display text-[clamp(1.75rem,3.4vw,3.1rem)] font-extralight uppercase leading-[1.02] tracking-[-0.02em] lg:max-w-[11ch]">
+            {artist.tagline}
+          </p>
+
+          <h1 className="mt-10 md:mt-14">
+            <PaintedName name={artist.name} />
+          </h1>
+
+          <div className="mt-8 flex flex-col gap-6 md:mt-10 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p className="max-w-[44ch] text-[17px] leading-relaxed text-(--a-ink)/75">
+                From {artist.origin}, living in the {artist.base}. {artist.sound}
+              </p>
+              <Socials className="mt-5" />
+            </div>
+            <div className="flex flex-wrap items-center gap-3">
               <button
                 type="button"
                 aria-pressed={following}
@@ -47,53 +61,37 @@ export default function Hero() {
                 }}
                 className={following ? btn.secondary : btn.primary}
               >
-                {following ? <Check size={18} weight="bold" /> : <Plus size={18} weight="bold" />}
+                {following ? <Check size={16} weight="bold" /> : <Plus size={16} weight="bold" />}
                 {following ? "Following" : "Follow"}
               </button>
               <a href="#membership" className={btn.secondary}>
                 See memberships
               </a>
-              <span className="font-hand text-[22px] text-(--a-muted) [transform:rotate(-1.5deg)]">
+              <span className="w-full font-hand text-[17px] text-(--a-muted) sm:w-auto sm:pl-2">
                 {members.toLocaleString("en-IN")} misfits and counting
               </span>
             </div>
           </div>
-
-          <figure className="relative lg:col-span-5">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[3px] shadow-2xl shadow-black/60 [transform:rotate(1.2deg)]">
-              <Image
-                src={heroImage}
-                alt={artist.images.portrait ? artist.name : "A skull face-paint study in bone-white paint on black paper"}
-                fill
-                priority
-                sizes="(min-width: 1024px) 40vw, 100vw"
-                className="object-cover"
-              />
-              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-(--a-bg) via-(--a-bg)/60 to-transparent" aria-hidden />
-              {!artist.images.portrait && (
-                <figcaption className="absolute right-4 top-3 font-hand text-[19px] text-(--a-ink)/75 [transform:rotate(2deg)]">face paint study, Halloween tour</figcaption>
-              )}
-            </div>
-          </figure>
         </div>
+      </div>
 
-        {/* The name crosses the artwork like a gig poster */}
-        <h1 className="relative z-20 -mt-6 lg:-mt-[13vw]">
-          <PaintedName name={artist.name} />
-        </h1>
-
-        {/* The exclusive, front and centre */}
-        <div className="mt-12 flex flex-col gap-5 rounded-md bg-(--a-surface) p-4 sm:flex-row sm:items-center md:mt-16 md:p-5">
+      {/* The exclusive, front and centre */}
+      <div className="mx-auto max-w-[1400px] px-5 pb-14 md:px-10 md:pb-20">
+        <div className="relative flex flex-col gap-5 rounded-md border border-(--a-ink)/10 bg-(--a-surface) p-4 sm:flex-row sm:items-center md:p-5 md:px-8">
+          <Corners size={30} className="text-(--a-ink)/25" />
           <div className="w-20 shrink-0 overflow-hidden rounded-sm sm:w-24">
             <Cover sizes="96px" />
           </div>
           <div className="min-w-0 flex-1">
-            <p className="font-hand text-[22px] leading-none text-(--a-accent)">{artist.album.releaseLabel}</p>
-            <p className="mt-1 font-display text-[clamp(1.6rem,3vw,2.25rem)] font-bold leading-none">
-              {artist.album.title}, the new album
+            <p className="flex items-center gap-2 font-hand text-[16px] leading-none text-(--a-accent)">
+              <span className="neon pulse h-2 w-2 rounded-full bg-(--a-accent)" aria-hidden />
+              {artist.album.releaseLabel}
             </p>
-            <div className="mt-3 h-[3px] w-full max-w-md overflow-hidden rounded-full bg-(--a-ink)/10" aria-hidden>
-              <div className="h-full bg-(--a-accent)" style={{ width: `${isPlaying ? player.progress * 100 : 0}%` }} />
+            <p className="mt-2 font-display text-[clamp(1.3rem,2.4vw,1.9rem)] font-black uppercase leading-none tracking-[-0.02em]">
+              {artist.album.title} <span className="font-extralight">the new album</span>
+            </p>
+            <div className="mt-3 h-[2px] w-full max-w-md overflow-hidden rounded-full bg-(--a-ink)/10" aria-hidden>
+              <div className="neon h-full bg-(--a-accent2) text-(--a-accent2)" style={{ width: `${isPlaying ? player.progress * 100 : 0}%` }} />
             </div>
           </div>
           <div className="flex gap-3">
@@ -102,7 +100,7 @@ export default function Hero() {
               className={`${btn.primary} whitespace-nowrap`}
               onClick={() => (isPlaying ? player.stop() : player.play(teaserId, teaser.root, teaser.mode, teaser.bpm))}
             >
-              {isPlaying ? <Pause size={18} weight="fill" /> : <Play size={18} weight="fill" />}
+              {isPlaying ? <Pause size={16} weight="fill" /> : <Play size={16} weight="fill" />}
               {isPlaying ? "Pause preview" : "Play the title track"}
             </button>
             <span className="hidden lg:block">

@@ -1,10 +1,21 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import Image from "next/image";
 import { Broadcast, Check, Microphone, VideoCamera } from "@phosphor-icons/react";
-import { btn, field } from "./ui";
+import { Duotone, btn, field } from "./ui";
+import { Corners, TornEdge } from "./Goth";
 import { useWorld } from "./state";
+
+// Sample tour dates are written "31 Oct"; they all fall in this year.
+const YEAR = 2026;
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+function splitDate(date: string) {
+  const [day, month] = date.split(" ");
+  const weekday = DAYS[new Date(YEAR, MONTHS.indexOf(month), Number(day)).getDay()];
+  return { day, month, weekday };
+}
 
 export default function Live() {
   const { artist, showToast } = useWorld();
@@ -22,75 +33,95 @@ export default function Live() {
   };
 
   return (
-    <section id="live" className="scroll-mt-20 border-t border-(--a-ink)/10">
-      <div className="relative h-[62vh] min-h-[420px] overflow-hidden">
-        <Image src={artist.images.crowd} alt="A crowd's raised hands and phone lights against gold stage light" fill sizes="100vw" className="object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-(--a-bg) via-(--a-bg)/30 to-transparent" aria-hidden />
-        <div className="absolute inset-x-0 bottom-0 mx-auto max-w-[1400px] px-5 pb-8 md:px-10 md:pb-12">
-          <p className="mb-3 font-hand text-[clamp(1.5rem,2.5vw,2.25rem)] text-(--a-accent) [transform:rotate(-2deg)]">bring the face paint</p>
-          <h2 className="font-stencil text-[clamp(4rem,13vw,12rem)] font-black uppercase leading-[0.82]">Catch him live</h2>
-          <p className="mt-4 max-w-[52ch] text-[17px] text-(--a-ink)/80">Shows on the road, and sessions that only happen here. Sample dates for this demo.</p>
+    <section id="live" className="scroll-mt-20">
+      <div className="relative flex h-[64vh] min-h-[440px] flex-col justify-end overflow-hidden">
+        <Duotone src={artist.images.crowd} alt="A crowd's raised hands and phone lights against the stage light" sizes="100vw" wash="accent2" className="absolute! inset-0" imgClassName="brightness-75" />
+        <div className="absolute inset-0 bg-gradient-to-t from-(--a-bg) via-(--a-bg)/35 to-transparent" aria-hidden />
+        <TornEdge flip />
+        <div className="relative mx-auto w-full max-w-[1400px] px-5 pb-8 md:px-10 md:pb-12">
+          <p className="mb-4 font-hand text-[clamp(1.1rem,1.8vw,1.5rem)] leading-none text-(--a-accent2)">Bring the face paint</p>
+          <h2 className="grunge font-display text-[clamp(2.8rem,9vw,8.5rem)] font-black uppercase leading-[0.86] tracking-[-0.035em]">Catch him live</h2>
+          <p className="mt-5 max-w-[52ch] text-[17px] text-(--a-ink)/80">Shows on the road, and sessions that only happen here. Sample dates for this demo.</p>
         </div>
       </div>
-      <div className="mx-auto max-w-[1400px] px-5 py-16 md:px-10 md:py-20">
-
-      <div className="grid gap-16 lg:grid-cols-12">
-        <div className="lg:col-span-6">
-          <h3 className="mb-4 text-[15px] text-(--a-muted)">On the road, 2026</h3>
-          <ul className="border-t border-(--a-ink)/10">
-            {artist.shows.map((s) => (
-              <li key={s.date + s.city} className="grid grid-cols-[6rem_1fr_auto] items-center gap-4 border-b border-(--a-ink)/10 py-4">
-                <span className="font-stencil text-[34px] font-black leading-none tabular-nums text-(--a-accent)">{s.date}</span>
-                <span className="min-w-0">
-                  <span className="block font-stencil text-[34px] font-extrabold uppercase leading-none">{s.city}</span>
-                  <span className="block truncate text-[14px] text-(--a-muted)">{s.venue}</span>
+      <div className="mx-auto max-w-[1400px] px-5 py-16 md:px-10 md:py-24">
+        <h3 className="grunge mb-8 font-display text-[clamp(1.5rem,3vw,2.4rem)] font-black uppercase leading-none tracking-[-0.02em] text-(--a-muted)">Upcoming shows {YEAR}</h3>
+        <ul>
+          {artist.shows.map((s) => {
+            const { day, month, weekday } = splitDate(s.date);
+            return (
+              <li
+                key={s.date + s.city}
+                className="grid grid-cols-[3.5rem_1fr_auto] items-center gap-x-4 gap-y-1 border-b border-(--a-ink)/10 py-5 sm:grid-cols-[5rem_7.5rem_1fr_12rem] md:grid-cols-[6rem_9rem_1fr_14rem_12rem] md:gap-x-6 md:py-6"
+              >
+                <span className="grunge row-span-2 font-display text-[clamp(2rem,4vw,3.25rem)] font-black leading-none tabular-nums tracking-[-0.03em] sm:row-span-1">{day}</span>
+                <span className="order-3 col-start-2 font-display text-[13px] font-extralight uppercase tracking-[0.04em] text-(--a-muted) sm:order-none sm:col-start-auto sm:text-[clamp(1rem,1.6vw,1.4rem)]">
+                  {month} <span className="pl-2 sm:pl-4">{weekday}</span>
                 </span>
-                {s.status === "Sold out" ? (
-                  <span className="text-[14px] text-(--a-muted)">Sold out</span>
-                ) : s.status === "Member presale" ? (
-                  <a href="#membership" className="rounded-full border border-(--a-accent)/60 px-3.5 py-2 text-[14px] font-semibold text-(--a-accent) hover:border-(--a-accent)">
-                    Member presale
-                  </a>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() => showToast("Tickets open with the promoter in the full build")}
-                    className="rounded-full bg-(--a-ink) px-3.5 py-2 text-[14px] font-semibold text-(--a-bg) hover:bg-(--a-accent)"
-                  >
-                    {s.status === "Few left" ? "Few left" : "Tickets"}
-                  </button>
-                )}
+                <span className="grunge min-w-0 font-display text-[clamp(1.15rem,2.6vw,2.1rem)] font-black uppercase leading-none tracking-[-0.02em]">{s.city}</span>
+                <span className="hidden truncate text-[15px] text-(--a-muted) md:block">{s.venue}</span>
+                <span className="row-span-2 flex flex-col items-end gap-2 sm:row-span-1">
+                  {s.status === "Sold out" ? (
+                    <span className="grunge -rotate-6 rounded-[3px] border-2 border-double border-(--a-accent) px-3 py-1.5 font-display text-[13px] font-black uppercase tracking-[0.12em] text-(--a-accent)">
+                      Sold out
+                    </span>
+                  ) : s.status === "Member presale" ? (
+                    <a
+                      href="#membership"
+                      className="distress whitespace-nowrap rounded-full border border-(--a-accent3) px-5 py-2.5 font-display text-[12px] font-extrabold uppercase tracking-[0.04em] text-(--a-accent3) hover:bg-(--a-accent3) hover:text-black"
+                    >
+                      Member presale
+                    </a>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => showToast("Tickets open with the promoter in the full build")}
+                      className="distress rounded-full bg-(--a-ink) px-6 py-2.5 font-display text-[12px] font-extrabold uppercase tracking-[0.04em] text-(--a-bg) hover:bg-(--a-accent)"
+                    >
+                      Tickets
+                    </button>
+                  )}
+                  {s.status === "Few left" ? (
+                    <span className="flex items-center gap-1.5 font-hand text-[14px] leading-none text-(--a-accent)">
+                      <span className="neon pulse h-1.5 w-1.5 rounded-full bg-(--a-accent)" aria-hidden />
+                      Few left
+                    </span>
+                  ) : null}
+                </span>
               </li>
-            ))}
-          </ul>
-        </div>
+            );
+          })}
+        </ul>
 
-        <div className="lg:col-span-6">
-          <h3 className="mb-4 flex items-center gap-2 text-[15px] text-(--a-muted)">
-            <Broadcast size={16} aria-hidden /> Only on Groupies
+      <div className="mt-20 md:mt-28">
+          <h3 className="grunge mb-8 flex items-center gap-3 font-display text-[clamp(1.5rem,3vw,2.4rem)] font-black uppercase leading-none tracking-[-0.02em] text-(--a-muted)">
+            <Broadcast size={28} className="text-(--a-accent2)" aria-hidden /> Only on Groupies
           </h3>
-          <ul className="space-y-4">
+          <ul className="grid gap-4 md:grid-cols-3">
             {artist.sessions.map((s) => {
               const n = taken[s.id];
               const left = s.capacity - n;
               const isReserved = reserved.includes(s.id);
               return (
-                <li key={s.id} className="rounded-md bg-(--a-surface) p-5 md:p-6">
-                  <div className="flex items-center gap-2 text-[14px] text-(--a-muted)">
+                <li key={s.id} className="relative flex flex-col rounded-md border border-(--a-ink)/10 bg-(--a-surface) p-6 md:p-8">
+                  <Corners size={28} className={s.membersOnly ? "text-(--a-accent3)/40" : "text-(--a-ink)/20"} />
+                  <div className={`flex items-center gap-2 text-[14px] ${s.membersOnly ? "text-(--a-accent3)" : "text-(--a-muted)"}`}>
                     {s.format === "Video" ? <VideoCamera size={16} aria-hidden /> : <Microphone size={16} aria-hidden />}
                     {s.format} session{s.membersOnly ? ", members only" : ""}
                   </div>
-                  <h4 className="mt-2 font-display text-[28px] font-bold leading-[1.02]">{s.title}</h4>
-                  <p className="mt-1 text-[16px]">{s.when}</p>
-                  <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-(--a-ink)/10" aria-hidden>
-                    <div className="h-full rounded-full bg-(--a-accent)" style={{ width: `${(n / s.capacity) * 100}%` }} />
+                  <h4 className="mt-3 font-display text-[19px] font-extrabold uppercase leading-[1.1] tracking-[-0.01em]">{s.title}</h4>
+                  <p className="mt-2 text-[16px] text-(--a-ink)/85">{s.when}</p>
+                  <div className="mt-auto pt-5" aria-hidden>
+                    <div className="h-[3px] rounded-full bg-(--a-ink)/10">
+                    <div className="neon h-full rounded-full bg-(--a-accent2) text-(--a-accent2)" style={{ width: `${(n / s.capacity) * 100}%` }} />
+                    </div>
                   </div>
                   <p className="mt-2 text-[14px] text-(--a-muted)">
                     {left.toLocaleString("en-IN")} of {s.capacity.toLocaleString("en-IN")} spots left
                   </p>
                   <div className="mt-5">
                     {isReserved ? (
-                      <p className="flex items-center gap-2 text-[15px] font-semibold text-(--a-accent)">
+                      <p className="flex items-center gap-2 font-hand text-[17px] text-(--a-accent2)">
                         <Check size={16} weight="bold" /> You&apos;re in
                       </p>
                     ) : s.membersOnly ? (
@@ -98,7 +129,7 @@ export default function Live() {
                         Join Inner Circle to reserve
                       </a>
                     ) : reserving === s.id ? (
-                      <form onSubmit={(e) => reserve(e, s.id)} className="flex flex-col gap-3 sm:flex-row">
+                      <form onSubmit={(e) => reserve(e, s.id)} className="flex flex-col gap-3">
                         <label htmlFor={`rsv-${s.id}`} className="sr-only">
                           Email
                         </label>
@@ -127,7 +158,6 @@ export default function Live() {
             })}
           </ul>
         </div>
-      </div>
       </div>
     </section>
   );

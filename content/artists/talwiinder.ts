@@ -19,7 +19,10 @@ export const talwiinder: Artist = {
   nameLocal: "ਤਲਵਿੰਦਰ",
   currency: "₹",
   images: {
-    // portrait: "/talwiinder/press/portrait.jpg", // drop a licensed press photo here
+    // Press photos supplied by the Groupies team. Confirm the licence before this page goes public.
+    portrait: "/talwiinder/press/portrait.jpg",
+    stage: "/talwiinder/press/stage.jpg",
+    closeUp: "/talwiinder/press/close-up.jpg",
     faceArt: "/talwiinder/face-paint-art.webp",
     cover: "/talwiinder/cover.webp",
     dressingRoom: "/talwiinder/dressing-room.webp",
@@ -27,12 +30,13 @@ export const talwiinder: Artist = {
     share: { art: "/talwiinder/share/face-paint-art.jpg", cover: "/talwiinder/share/cover.jpg" },
   },
   theme: {
-    bg: "#17130F", // kohl
-    surface: "#241E18", // khaddar cloth
-    ink: "#EDE5D3", // bone paint
-    muted: "#948B7C", // ash
-    accent: "#E2A23A", // phulkari gold silk
-    accent2: "#B8346B", // phulkari rose
+    bg: "#000000", // black paint
+    surface: "#0E0E0E", // stage black
+    ink: "#FFFFFF", // bone white
+    muted: "#9A9A9A", // smoke
+    accent: "#FF2D46", // neon red
+    accent2: "#2BFF88", // neon green
+    accent3: "#3D7BFF", // neon blue
   },
   tagline: "Love songs from behind the paint.",
   origin: "Tarn Taran, Punjab",
@@ -46,10 +50,10 @@ export const talwiinder: Artist = {
   ],
   members: 18420,
   socials: [
+    { label: "Instagram", url: "https://www.instagram.com/talwiinder/" },
+    { label: "YouTube", url: "https://www.youtube.com/@Talwiinder" },
     { label: "Spotify", url: SPOTIFY_ARTIST },
     { label: "Apple Music", url: "https://music.apple.com/us/artist/talwiinder/1422472152" },
-    { label: "YouTube", url: "https://www.youtube.com/@Talwiinder" },
-    { label: "Instagram", url: "https://www.instagram.com/talwiinder" },
     { label: "SoundCloud", url: "https://soundcloud.com/talwiinder" },
     { label: "X", url: "https://x.com/talwiinder" },
   ],
