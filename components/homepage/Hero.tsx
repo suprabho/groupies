@@ -100,7 +100,7 @@ export default function Hero() {
               />
             </Link>
             <Link
-              href="/artist/demo"
+              href="/artist/talwiinder"
               className="inline-flex items-center gap-2 px-6 py-4 border border-[#2a2a2a] text-[#f5f5f0] font-bold text-sm uppercase tracking-wider hover:border-[#f5f5f0] transition-colors duration-200"
             >
               See Demo Page

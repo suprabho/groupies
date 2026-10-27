@@ -104,7 +104,7 @@ export default function Manifesto() {
             style={{ fontSize: "20rem", lineHeight: "0.8", opacity: 0.3 }}
             aria-hidden
           >
-            "
+            &quot;
           </div>
           <blockquote className="relative z-10 max-w-3xl">
             <p

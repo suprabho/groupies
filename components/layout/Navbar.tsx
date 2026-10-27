@@ -37,7 +37,7 @@ export default function Navbar() {
             { label: "For Artists", href: "#artists" },
             { label: "How It Works", href: "#how-it-works" },
             { label: "Pricing", href: "#pricing" },
-            { label: "Demo", href: "/artist/demo" },
+            { label: "Demo", href: "/artist/talwiinder" },
           ].map((link) => (
             <Link
               key={link.label}
@@ -76,7 +76,7 @@ export default function Navbar() {
             { label: "For Artists", href: "#artists" },
             { label: "How It Works", href: "#how-it-works" },
             { label: "Pricing", href: "#pricing" },
-            { label: "Demo Artist Page", href: "/artist/demo" },
+            { label: "Demo Artist Page", href: "/artist/talwiinder" },
           ].map((link) => (
             <Link
               key={link.label}
