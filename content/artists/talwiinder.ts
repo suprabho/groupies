@@ -24,6 +24,7 @@ export const talwiinder: Artist = {
     cover: "/talwiinder/cover.webp",
     dressingRoom: "/talwiinder/dressing-room.webp",
     crowd: "/talwiinder/crowd.webp",
+    share: { art: "/talwiinder/share/face-paint-art.jpg", cover: "/talwiinder/share/cover.jpg" },
   },
   theme: {
     bg: "#17130F", // kohl
