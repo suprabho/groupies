@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
-import { Big_Shoulders, Big_Shoulders_Stencil, Caveat_Brush, Instrument_Sans, Instrument_Serif, Mukta_Mahee } from "next/font/google";
+import { Didact_Gothic, Mukta_Mahee, Shadows_Into_Light, Zalando_Sans_Expanded } from "next/font/google";
 import { artists, getArtist, DEMO_ARTIST_SLUG } from "@/content/artists";
 import ArtistWorld from "@/components/artist/ArtistWorld";
 
-const display = Big_Shoulders({ subsets: ["latin"], variable: "--font-display", display: "swap", adjustFontFallback: false });
-const body = Instrument_Sans({ subsets: ["latin"], variable: "--font-body", display: "swap" });
-const stencil = Big_Shoulders_Stencil({ subsets: ["latin"], variable: "--font-stencil", display: "swap", adjustFontFallback: false });
-const serif = Instrument_Serif({ subsets: ["latin"], weight: "400", style: ["normal", "italic"], variable: "--font-serif", display: "swap" });
-const hand = Caveat_Brush({ subsets: ["latin"], weight: "400", variable: "--font-hand", display: "swap" });
+// Variable, 200–900: hairline 200 for secondary display text, 900 for names and headlines.
+const display = Zalando_Sans_Expanded({ subsets: ["latin"], variable: "--font-display", display: "swap", adjustFontFallback: false });
+const body = Didact_Gothic({ subsets: ["latin"], weight: "400", variable: "--font-body", display: "swap" });
+const hand = Shadows_Into_Light({ subsets: ["latin"], weight: "400", variable: "--font-hand", display: "swap" });
 const gurmukhi = Mukta_Mahee({ subsets: ["gurmukhi"], weight: ["400", "700", "800"], variable: "--font-pa", display: "swap" });
 
 export function generateStaticParams() {
@@ -29,5 +28,5 @@ export default async function ArtistPage({ params }: { params: Promise<{ slug: s
   if (slug === "demo") redirect(`/artist/${DEMO_ARTIST_SLUG}`);
   const artist = getArtist(slug);
   if (!artist) notFound();
-  return <ArtistWorld artist={artist} fontClass={[display, body, gurmukhi, stencil, serif, hand].map((f) => f.variable).join(" ")} />;
+  return <ArtistWorld artist={artist} fontClass={[display, body, gurmukhi, hand].map((f) => f.variable).join(" ")} />;
 }

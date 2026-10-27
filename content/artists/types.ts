@@ -5,8 +5,9 @@ export type ArtistTheme = {
   surface: string; // raised surfaces
   ink: string; // primary text / paint
   muted: string; // secondary text
-  accent: string; // primary accent
-  accent2: string; // rare secondary accent
+  accent: string; // primary accent: urgency, the release, hover on primary actions
+  accent2: string; // second accent: live, playing, available, done
+  accent3: string; // third accent: members and anything behind the paywall
 };
 
 export type Track = {
@@ -91,6 +92,10 @@ export type Artist = {
     /** A licensed press photo. When set, it replaces the face-paint artwork in the hero. */
     portrait?: string;
     faceArt: string;
+    /** A live shot for the merch banner. Falls back to the crowd shot. */
+    stage?: string;
+    /** A tight close-up for the mailing-list window. Falls back to the face-paint artwork. */
+    closeUp?: string;
     cover: string;
     dressingRoom: string;
     crowd: string;

@@ -24,12 +24,12 @@ export default function CartDrawer() {
         role="dialog"
         aria-modal="true"
         aria-label="Your bag"
-        className={`absolute right-0 top-0 flex h-full w-full max-w-md flex-col bg-(--a-surface) shadow-2xl transition-transform duration-300 ${
+        className={`absolute right-0 top-0 flex h-full w-full max-w-md flex-col border-l border-(--a-ink)/10 bg-(--a-surface) shadow-2xl transition-transform duration-300 ${
           cartOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         <div className="flex items-center justify-between border-b border-(--a-ink)/10 px-6 py-5">
-          <h2 className="font-display text-[32px] font-extrabold leading-none">Your bag</h2>
+          <h2 className="font-display text-[26px] font-black uppercase leading-none tracking-[-0.02em]">Your bag</h2>
           <button type="button" onClick={() => setCartOpen(false)} aria-label="Close bag" className="rounded-full p-2 text-(--a-muted) hover:text-(--a-ink)" tabIndex={cartOpen ? 0 : -1}>
             <X size={22} />
           </button>
@@ -49,7 +49,7 @@ export default function CartDrawer() {
               {cart.map((l) => (
                 <li key={l.key} className="flex items-center justify-between gap-4 py-4">
                   <div className="min-w-0">
-                    <p className="truncate text-[16px] font-semibold">{l.name}</p>
+                    <p className="truncate font-display text-[14px] font-extrabold uppercase">{l.name}</p>
                     <p className="text-[14px] text-(--a-muted)">
                       {l.variant ? `Size ${l.variant}, ` : ""}
                       {money(l.price)}
@@ -74,7 +74,7 @@ export default function CartDrawer() {
               ))}
             </ul>
             <div className="border-t border-(--a-ink)/10 px-6 py-5">
-              <div className="flex justify-between text-[18px] font-semibold">
+              <div className="flex justify-between font-display text-[17px] font-extrabold uppercase">
                 <span>Subtotal</span>
                 <span className="tabular-nums">{money(subtotal)}</span>
               </div>

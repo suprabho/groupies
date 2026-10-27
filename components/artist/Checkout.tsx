@@ -51,10 +51,10 @@ function CheckoutDialog({ checkout }: { checkout: CheckoutRequest }) {
         aria-modal="true"
         aria-labelledby="checkout-title"
         onMouseDown={(e) => e.stopPropagation()}
-        className="max-h-[92vh] w-full max-w-lg overflow-y-auto rounded-t-xl bg-(--a-surface) p-6 shadow-2xl sm:rounded-xl md:p-8"
+        className="max-h-[92vh] w-full max-w-lg overflow-y-auto rounded-t-xl border border-(--a-ink)/10 bg-(--a-surface) p-6 shadow-2xl sm:rounded-xl md:p-8"
       >
         <div className="flex items-start justify-between gap-4">
-          <h2 id="checkout-title" className="font-display text-[36px] font-extrabold leading-none">
+          <h2 id="checkout-title" className="font-display text-[clamp(1.5rem,4vw,2rem)] font-black uppercase leading-[0.95] tracking-[-0.02em]">
             {stage === "done" ? "Done" : checkout.title}
           </h2>
           <button type="button" onClick={closeCheckout} aria-label="Close" className="-mr-2 -mt-1 rounded-full p-2 text-(--a-muted) hover:text-(--a-ink)">
@@ -64,7 +64,7 @@ function CheckoutDialog({ checkout }: { checkout: CheckoutRequest }) {
 
         {stage === "done" ? (
           <div className="py-6">
-            <CheckCircle size={48} weight="fill" className="text-(--a-accent)" aria-hidden />
+            <CheckCircle size={48} weight="fill" className="text-(--a-accent2)" aria-hidden />
             <p role="status" className="mt-4 text-[18px] leading-snug">
               {checkout.success}
             </p>
@@ -81,7 +81,7 @@ function CheckoutDialog({ checkout }: { checkout: CheckoutRequest }) {
                   <span className="tabular-nums">{money(l.price)}</span>
                 </li>
               ))}
-              <li className="flex justify-between gap-4 pt-2 text-[18px] font-semibold">
+              <li className="flex justify-between gap-4 pt-2 font-display text-[16px] font-extrabold uppercase">
                 <span>Total</span>
                 <span className="tabular-nums">
                   {money(total)}
@@ -101,8 +101,8 @@ function CheckoutDialog({ checkout }: { checkout: CheckoutRequest }) {
                 {(["UPI", "Card"] as const).map((m) => (
                   <label
                     key={m}
-                    className={`cursor-pointer rounded-md border px-4 py-3 text-center text-[16px] font-semibold ${
-                      method === m ? "border-(--a-accent) text-(--a-ink)" : "border-(--a-ink)/15 text-(--a-muted)"
+                    className={`cursor-pointer rounded-md border px-4 py-3 text-center font-display text-[14px] font-extrabold uppercase ${
+                      method === m ? "border-(--a-ink) text-(--a-ink)" : "border-(--a-ink)/15 text-(--a-muted)"
                     }`}
                   >
                     <input type="radio" name="method" value={m} checked={method === m} onChange={() => setMethod(m)} className="sr-only" />

@@ -4,6 +4,7 @@ import { useState, type FormEvent } from "react";
 import { Check } from "@phosphor-icons/react";
 import { Section, SectionHeading, btn, field, label } from "./ui";
 import { useWorld } from "./state";
+import { RoseWindow } from "./Goth";
 import type { FanNote } from "@/content/artists/types";
 
 const REQUESTS = [
@@ -60,7 +61,7 @@ export default function FanZone() {
 
   return (
     <Section id="fan-zone">
-      <SectionHeading title="Say something" note="he reads these">
+      <SectionHeading title="Say something" note="He reads these" noteTone="accent2">
         Every message goes to {artist.name} and his team, not a comment section. Requests are paid and limited each month.
       </SectionHeading>
 
@@ -74,7 +75,7 @@ export default function FanZone() {
                 aria-checked={mode === m}
                 type="button"
                 onClick={() => setMode(m)}
-                className={`rounded-full px-4 py-2 text-[15px] font-semibold ${mode === m ? "bg-(--a-ink) text-(--a-bg)" : "text-(--a-muted)"}`}
+                className={`rounded-full px-5 py-2.5 font-display text-[12px] font-extrabold uppercase tracking-[0.06em] ${mode === m ? "bg-(--a-ink) text-(--a-bg)" : "text-(--a-muted) hover:text-(--a-ink)"}`}
               >
                 {m === "message" ? "Send a message" : "Make a request"}
               </button>
@@ -125,7 +126,7 @@ export default function FanZone() {
                   Send message
                 </button>
                 {sent && (
-                  <p role="status" className="flex items-center gap-2 text-[15px] text-(--a-accent)">
+                  <p role="status" className="flex items-center gap-2 text-[15px] text-(--a-accent2)">
                     <Check size={16} weight="bold" /> Message sent. It&apos;s on the wall too.
                   </p>
                 )}
@@ -140,7 +141,7 @@ export default function FanZone() {
                     <label
                       key={r.id}
                       className={`cursor-pointer rounded-md border p-4 transition-colors ${
-                        type === r.id ? "border-(--a-accent) bg-(--a-surface)" : "border-(--a-ink)/15 hover:border-(--a-ink)/40"
+                        type === r.id ? "border-(--a-accent2) bg-(--a-surface)" : "border-(--a-ink)/15 hover:border-(--a-ink)/40"
                       }`}
                     >
                       <input
@@ -155,8 +156,8 @@ export default function FanZone() {
                         className="sr-only"
                       />
                       <span className="flex items-baseline justify-between gap-3">
-                        <span className="text-[16px] font-semibold">{r.name}</span>
-                        <span className="text-[15px] text-(--a-accent)">{money(r.price)}</span>
+                        <span className="font-display text-[14px] font-extrabold uppercase tracking-[-0.005em]">{r.name}</span>
+                        <span className="text-[15px] tabular-nums">{money(r.price)}</span>
                       </span>
                       <span className="mt-1 block text-[14px] leading-snug text-(--a-muted)">{r.detail}</span>
                     </label>
@@ -168,7 +169,7 @@ export default function FanZone() {
                 <div>
                   <label className="flex cursor-pointer items-center gap-3 text-[16px]">
                     <input type="checkbox" checked={gift} onChange={(e) => setGift(e.target.checked)} className="peer sr-only" />
-                    <span className="relative h-6 w-11 rounded-full bg-(--a-ink)/20 transition-colors after:absolute after:left-0.5 after:top-0.5 after:h-5 after:w-5 after:rounded-full after:bg-(--a-ink) after:transition-transform peer-checked:bg-(--a-accent) peer-checked:after:translate-x-5 peer-focus-visible:outline-2 peer-focus-visible:outline-(--a-accent)" />
+                    <span className="relative h-6 w-11 rounded-full bg-(--a-ink)/20 transition-colors after:absolute after:left-0.5 after:top-0.5 after:h-5 after:w-5 after:rounded-full after:bg-(--a-ink) after:transition-transform peer-checked:bg-(--a-accent2) peer-checked:after:translate-x-5 peer-focus-visible:outline-2 peer-focus-visible:outline-(--a-accent3)" />
                     It&apos;s a gift for someone
                   </label>
                   {gift && (
@@ -202,7 +203,7 @@ export default function FanZone() {
                   {req.price === 0 ? "Send question" : `Request for ${money(req.price)}`}
                 </button>
                 {asked && (
-                  <p role="status" className="flex items-center gap-2 text-[15px] text-(--a-accent)">
+                  <p role="status" className="flex items-center gap-2 text-[15px] text-(--a-accent2)">
                     <Check size={16} weight="bold" /> Question sent. Listen out on the next episode.
                   </p>
                 )}
@@ -211,17 +212,19 @@ export default function FanZone() {
           )}
         </div>
 
-        <div className="lg:col-span-5 lg:col-start-8">
-          <h3 className="mb-5 text-[15px] text-(--a-muted)">From the fan wall</h3>
-          <ul className="space-y-4" aria-live="polite">
+        <div className="relative lg:col-span-5 lg:col-start-8">
+          <RoseWindow className="absolute -right-24 -top-20 w-[520px] max-w-none text-(--a-ink)/[0.06]" />
+          <h3 className="mb-5 font-hand text-[18px] text-(--a-muted)">From the fan wall</h3>
+          <ul className="relative space-y-6" aria-live="polite">
             {wall.slice(0, 6).map((n, i) => (
               <li
                 key={`${n.name}-${i}`}
-                className="rounded-md bg-(--a-surface) p-5"
-                style={{ transform: `rotate(${[-0.6, 0.5, -0.3, 0.7, -0.5, 0.2][i % 6]}deg)` }}
+                className="distress distress-under relative rounded-sm border border-(--a-ink)/10 bg-(--a-surface) p-5 pt-6"
+                style={{ transform: `rotate(${[-0.8, 0.6, -0.4, 0.9, -0.6, 0.3][i % 6]}deg)` }}
               >
-                <p className="font-serif text-[21px] italic leading-snug">{n.text}</p>
-                <p className="mt-3 font-hand text-[19px] text-(--a-accent)">
+                <span className="tape" aria-hidden />
+                <p className="font-display text-[18px] font-extralight leading-[1.4]">{n.text}</p>
+                <p className="mt-3 font-hand text-[16px] text-(--a-accent2)">
                   {n.name}, {n.city}
                 </p>
               </li>

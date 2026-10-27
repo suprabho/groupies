@@ -31,12 +31,12 @@ export default function Album() {
             <div className="mt-8">
               <h2 className="flex flex-wrap items-baseline gap-x-4">
                 <span className="sr-only">{album.title}, </span>
-                <span lang="pa" aria-hidden className="font-pa text-[clamp(4rem,8vw,6rem)] font-extrabold leading-[0.9] text-(--a-accent)">
+                <span lang="pa" aria-hidden className="grunge font-pa text-[clamp(4rem,8vw,6rem)] font-extrabold leading-[0.9] text-(--a-accent)">
                   {album.titleLocal ?? album.title}
                 </span>
-                <span className="font-hand text-[28px] leading-none text-(--a-ink)/80 [transform:rotate(-2deg)]">means shadows.</span>
+                <span className="font-hand text-[20px] leading-none text-(--a-ink)/80">means shadows.</span>
               </h2>
-              <p className="mt-5 max-w-[28ch] font-serif text-[28px] italic leading-[1.15]">{album.subtitle}</p>
+              <p className="mt-6 max-w-[26ch] font-display text-[24px] font-extralight leading-[1.2] tracking-[-0.01em]">{album.subtitle}</p>
               <p className="mt-3 max-w-[52ch] text-[16px] leading-relaxed text-(--a-muted)">{album.description}</p>
 
               <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -68,7 +68,7 @@ export default function Album() {
         {/* Tracklist */}
         <div className="lg:col-span-7">
           <div className="mb-4 flex items-baseline justify-between gap-4 text-[14px] text-(--a-muted)">
-            <span>{album.releaseLabel}</span>
+            <span className="font-hand text-[16px] text-(--a-accent)">{album.releaseLabel}</span>
             <span>30-second previews for everyone</span>
           </div>
           <ol className="border-t border-(--a-ink)/10">
@@ -79,7 +79,7 @@ export default function Album() {
               return (
                 <li key={t.n} className={`relative border-b border-(--a-ink)/10 ${playing ? "bg-(--a-surface)" : ""}`}>
                   <div className="grid grid-cols-[2.25rem_1fr_auto] items-center gap-3 px-2 py-4 sm:grid-cols-[2.5rem_1fr_auto_auto] sm:gap-5 sm:px-3">
-                    <span className="font-stencil text-[34px] font-extrabold leading-none tabular-nums text-(--a-muted)">
+                    <span className="font-display text-[26px] font-extralight leading-none tabular-nums text-(--a-muted)">
                       {playing ? <Bars /> : t.n}
                     </span>
                     <button
@@ -88,24 +88,24 @@ export default function Album() {
                       className="group min-w-0 text-left"
                       aria-label={`${playing ? "Pause" : "Play"} preview of ${t.title}`}
                     >
-                      <span className="flex items-baseline gap-3">
-                        <span className={`truncate font-display text-[24px] font-bold leading-tight ${playing ? "text-(--a-accent)" : "group-hover:text-(--a-accent)"}`}>
+                      <span className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                        <span className={`font-display text-[17px] font-extrabold uppercase leading-tight tracking-[-0.01em] sm:text-[20px] ${playing ? "neon-text text-(--a-accent2)" : "group-hover:text-(--a-accent2)"}`}>
                           {t.title}
                         </span>
                         {t.scribble ? (
-                          <span className="hidden shrink-0 font-hand text-[20px] leading-none text-(--a-accent) [transform:rotate(-3deg)] md:inline">
+                          <span className="hidden shrink-0 font-hand text-[15px] leading-none text-(--a-accent) md:inline">
                             {t.scribble}
                           </span>
                         ) : null}
                       </span>
-                      <span className="block truncate font-serif text-[17px] italic text-(--a-muted)">{t.note}</span>
+                      <span className="mt-1 block truncate text-[15px] text-(--a-muted)">{t.note}</span>
                     </button>
                     <span className="hidden text-[15px] tabular-nums text-(--a-muted) sm:block">{t.duration}</span>
                     <div className="flex items-center gap-2">
                       <button
                         type="button"
                         onClick={() => (playing ? player.stop() : player.play(id, t.root, t.mode, t.bpm))}
-                        className="grid h-10 w-10 place-items-center rounded-full border border-(--a-ink)/20 hover:border-(--a-ink)"
+                        className={`grid h-10 w-10 place-items-center rounded-full border transition-colors ${playing ? "border-(--a-accent2) text-(--a-accent2)" : "border-(--a-ink)/20 hover:border-(--a-ink)"}`}
                         aria-label={`${playing ? "Pause" : "Play"} preview of ${t.title}`}
                       >
                         {playing ? <Pause size={16} weight="fill" /> : <Play size={16} weight="fill" />}
@@ -114,7 +114,7 @@ export default function Album() {
                         type="button"
                         disabled={owned}
                         onClick={() => addToCart({ id, name: `${t.title} (track)`, price: album.priceTrack, kind: "track" })}
-                        className="hidden h-10 items-center gap-1.5 rounded-full px-3 text-[14px] font-semibold text-(--a-muted) hover:text-(--a-ink) disabled:text-(--a-accent) sm:flex"
+                        className="hidden h-10 items-center gap-1.5 rounded-full px-3 text-[14px] text-(--a-muted) hover:text-(--a-ink) disabled:text-(--a-accent2) sm:flex"
                         aria-label={owned ? `${t.title} is in your bag` : `Add ${t.title} to bag for ${money(album.priceTrack)}`}
                       >
                         {owned ? <Check size={16} weight="bold" /> : <ShoppingBag size={16} />}
@@ -124,7 +124,7 @@ export default function Album() {
                   </div>
                   {playing && (
                     <div className="absolute inset-x-0 bottom-0 h-[2px] bg-(--a-ink)/10" aria-hidden>
-                      <div className="h-full bg-(--a-accent)" style={{ width: `${player.progress * 100}%` }} />
+                      <div className="neon h-full bg-(--a-accent2) text-(--a-accent2)" style={{ width: `${player.progress * 100}%` }} />
                     </div>
                   )}
                 </li>

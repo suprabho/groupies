@@ -17,6 +17,7 @@ import ArtistFooter from "./ArtistFooter";
 import CartDrawer from "./CartDrawer";
 import Checkout from "./Checkout";
 import Toast from "./Toast";
+import { GrungeDefs } from "./Goth";
 
 export default function ArtistWorld({ artist, fontClass }: { artist: Artist; fontClass: string }) {
   const t = artist.theme;
@@ -27,15 +28,17 @@ export default function ArtistWorld({ artist, fontClass }: { artist: Artist; fon
     "--a-muted": t.muted,
     "--a-accent": t.accent,
     "--a-accent2": t.accent2,
+    "--a-accent3": t.accent3,
   } as CSSProperties;
 
   return (
     <WorldProvider artist={artist}>
       <div style={vars} className={`artist-world ${fontClass} min-h-screen w-full bg-(--a-bg) text-(--a-ink)`}>
+        <GrungeDefs />
         <TopBar />
+        <SectionNav />
         <Hero />
         <Marquee />
-        <SectionNav />
         <main>
           <Album />
           <Diary />
