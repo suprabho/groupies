@@ -3,24 +3,27 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { CheckCircle, X } from "@phosphor-icons/react";
 import { btn, field, label } from "./ui";
-import { useWorld } from "./state";
+import { useWorld, type CheckoutRequest } from "./state";
 
 export default function Checkout() {
-  const { checkout, closeCheckout, money } = useWorld();
+  const { checkout } = useWorld();
+  // The dialog unmounts on close, so stage and method start fresh on every open.
+  if (!checkout) return null;
+  return <CheckoutDialog checkout={checkout} />;
+}
+
+function CheckoutDialog({ checkout }: { checkout: CheckoutRequest }) {
+  const { closeCheckout, money } = useWorld();
   const [stage, setStage] = useState<"form" | "paying" | "done">("form");
   const [method, setMethod] = useState<"UPI" | "Card">("UPI");
   const firstField = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (!checkout) return;
-    setStage("form");
-    setMethod("UPI");
     const t = window.setTimeout(() => firstField.current?.focus(), 30);
     return () => window.clearTimeout(t);
-  }, [checkout]);
+  }, []);
 
   useEffect(() => {
-    if (!checkout) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && closeCheckout();
     window.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
@@ -28,9 +31,8 @@ export default function Checkout() {
       window.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
     };
-  }, [checkout, closeCheckout]);
+  }, [closeCheckout]);
 
-  if (!checkout) return null;
   const total = checkout.lines.reduce((n, l) => n + l.price, 0);
 
   const pay = (e: FormEvent) => {
