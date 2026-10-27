@@ -59,3 +59,67 @@ body {
 ::-webkit-scrollbar-track { background: #0a0a0a; }
 ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: #e8ff47; }
+
+/* ───────── Artist worlds ───────── */
+
+.artist-world {
+  font-family: var(--font-body), "Helvetica Neue", Arial, sans-serif;
+  font-feature-settings: "ss01", "kern";
+  position: relative;
+  isolation: isolate;
+}
+.artist-world .font-display {
+  font-family: var(--font-display), "Arial Narrow", sans-serif;
+  font-optical-sizing: auto;
+  letter-spacing: -0.01em;
+}
+.artist-world .font-sans { font-family: var(--font-body), "Helvetica Neue", Arial, sans-serif; }
+.artist-world .font-pa { font-family: var(--font-pa), var(--font-body), sans-serif; }
+.artist-world .font-stencil { font-family: var(--font-stencil), var(--font-display), sans-serif; font-optical-sizing: auto; letter-spacing: -0.005em; }
+.artist-world .font-serif { font-family: var(--font-serif), Georgia, serif; letter-spacing: -0.01em; }
+.artist-world .font-hand { font-family: var(--font-hand), cursive; letter-spacing: 0; }
+.artist-world .text-outline { color: transparent; -webkit-text-stroke: 1.5px currentColor; }
+.artist-world .text-outline-ink { color: transparent; -webkit-text-stroke: 1.5px var(--a-ink); }
+
+/* Track-title marquee: the one moving strip on the page */
+@keyframes marquee-x { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.marquee-x { display: flex; width: max-content; animation: marquee-x 60s linear infinite; }
+.artist-world ::selection { background: var(--a-accent); color: var(--a-bg); }
+.artist-world :focus-visible { outline: 2px solid var(--a-accent); outline-offset: 3px; border-radius: 4px; }
+
+/* Paper grain over the whole world */
+.artist-world::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* The one orchestrated moment: the name is brushed on */
+.brush-stroke {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: brush 1.9s cubic-bezier(0.55, 0.1, 0.3, 1) 0.25s forwards;
+}
+@keyframes brush { to { stroke-dashoffset: 0; } }
+
+/* Now-playing bars */
+.eq span { width: 3px; background: var(--a-accent); border-radius: 1px; animation: eq 0.9s ease-in-out infinite; }
+.eq span:nth-child(2) { animation-delay: -0.3s; }
+.eq span:nth-child(3) { animation-delay: -0.6s; }
+@keyframes eq { 0%, 100% { height: 30%; } 50% { height: 100%; } }
+
+.toast-in { animation: toastIn 0.25s ease-out; }
+@keyframes toastIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .brush-stroke { animation: none; stroke-dashoffset: 0; }
+  .eq span { animation: none; height: 70%; }
+  .toast-in { animation: none; }
+  .marquee-x { animation: none; }
+  html { scroll-behavior: auto; }
+}
